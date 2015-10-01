@@ -21,7 +21,7 @@
         android:layout_height="45dp"
         android:background="#FFFFFFFF"
         android:id="@+id/headerLogo"
-        android:src="@drawable/jesulogo"
+        android:src="@drawable/logo"
         android:maxHeight="36dp" />
 
     <ImageButton
