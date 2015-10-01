@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SchoolApp</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="parse_app_id">hEBpPIEYk47kC8NdUoxKlFK7wv1Riw8ft9AAfT3V</string>
+    <string name="parse_client_key">bjFzXLfxNLiyc6tPWu2u9S5ldOuvShMYQFDHftf2</string>
+
+</resources>
