@@ -51,7 +51,7 @@ public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemC
                 else if (currentapiVersion >= 10) {
                     PopupMenu popupMenu = new PopupMenu(DashboardActivity.this, v);
                     popupMenu.setOnMenuItemClickListener(DashboardActivity.this);
-                    popupMenu.inflate(R.menu.main);
+                    popupMenu.inflate(R.menu.menu_main);
                     popupMenu.show();
                 }
             }
