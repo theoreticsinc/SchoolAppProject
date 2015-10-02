@@ -1,25 +1,20 @@
-package utils;
+package com.theoreticsinc.schoolapp.utils;
 
 
 /**
  * Created by Angelo on 9/23/2015.
  */
-import android.content.ClipData;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
-
-import models.Items;
-import models.Newsletter;
-import models.PageModel;
+import com.theoreticsinc.schoolapp.models.Items;
+import com.theoreticsinc.schoolapp.models.Newsletter;
+import com.theoreticsinc.schoolapp.models.PageModel;
 
 public class GSONParser {
 

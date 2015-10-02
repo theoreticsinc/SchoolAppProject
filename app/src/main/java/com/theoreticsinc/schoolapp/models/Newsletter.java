@@ -1,10 +1,8 @@
-package models;
+package com.theoreticsinc.schoolapp.models;
 
 /**
  * Created by Angelo on 9/30/2015.
  */
-
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 

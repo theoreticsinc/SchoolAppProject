@@ -1,4 +1,4 @@
-package models;
+package com.theoreticsinc.schoolapp.models;
 
 /**
  * Created by Angelo on 9/30/2015.

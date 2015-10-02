@@ -1,9 +1,9 @@
 package com.theoreticsinc.schoolapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,8 +12,10 @@ import com.parse.ParseACL;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.theoreticsinc.schoolapp.activities.DrawerActivity;
+import com.theoreticsinc.schoolapp.activities.DashboardActivity;
 
-public class StarterActivity extends AppCompatActivity {
+public class StarterActivity extends Activity{
 
     private static final int REQUEST_CODE = 0;
     private static String TAG = "com.theoreticsinc.schoolapp.StarterActivity";
@@ -54,9 +56,19 @@ public class StarterActivity extends AppCompatActivity {
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "SchoolApp");
         testObject.saveInBackground();
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 
-        Intent i = new Intent(StarterActivity.this, HomeActivity.class);
-        startActivity(i);
+
+        if (currentapiVersion < 14) {
+            // Do something for 14 and above versions
+            Intent i = new Intent(StarterActivity.this, DashboardActivity.class);
+            startActivity(i);
+        }
+        else if (currentapiVersion >= 14) {
+            // Do something for 14 and above versions
+            Intent i = new Intent(StarterActivity.this, DrawerActivity.class);
+            startActivity(i);
+        }
         this.finish();
     }
 
@@ -71,7 +83,7 @@ public class StarterActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
-                        //HomeActivity.super.onBackPressed();
+                        //DashboardActivity.super.onBackPressed();
                         finish();
                     }
                 }).create().show();

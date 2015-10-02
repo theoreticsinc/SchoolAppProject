@@ -1,34 +1,33 @@
-package com.theoreticsinc.schoolapp;
+package com.theoreticsinc.schoolapp.activities;
 
 /**
  * Created by Angelo on 9/30/2015.
  */
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.ListPopupWindow;
 import android.widget.Toast;
+
+import android.view.View.OnClickListener;
 
 import com.parse.Parse;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.theoreticsinc.schoolapp.R;
+import com.theoreticsinc.schoolapp.utils.BadgeView;
 
-import utils.BadgeView;
-import utils.FontCache;
-
-public class HomeActivity extends AppCompatActivity {
+public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemClickListener {
 
     private static final int REQUEST_CODE = 0;
     private boolean parseIsInitialized = false;
@@ -39,26 +38,26 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
 
-        if(getResources().getBoolean(R.bool.portrait_only)){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
+        //Mock Menu Button
 
-        if ((getResources().getConfiguration().screenLayout &      Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            Toast.makeText(this, "Large screen",Toast.LENGTH_LONG).show();
+        ImageButton menuButton = (ImageButton) findViewById(R.id.menuButton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                if (currentapiVersion < 10) {
+                    openOptionsMenu();
+                }
+                else if (currentapiVersion >= 10) {
+                    PopupMenu popupMenu = new PopupMenu(DashboardActivity.this, v);
+                    popupMenu.setOnMenuItemClickListener(DashboardActivity.this);
+                    popupMenu.inflate(R.menu.main);
+                    popupMenu.show();
+                }
+            }
+        });
 
-        }
-        else if ((getResources().getConfiguration().screenLayout &      Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            Toast.makeText(this, "Normal sized screen" , Toast.LENGTH_LONG).show();
-
-        }
-        else if ((getResources().getConfiguration().screenLayout &      Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-            Toast.makeText(this, "Small sized screen" , Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(this, "Screen size is neither large, normal or small" , Toast.LENGTH_LONG).show();
-        }
+        //Main Dashboards Menus
 
         View newsletterTarget = findViewById(R.id.newsletterTarget);
         final BadgeView newsletterBadge = new BadgeView(this, newsletterTarget);
@@ -70,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         newsletterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, ListActivity.class);
+                Intent i = new Intent(DashboardActivity.this, ListActivity.class);
                 startActivityForResult(i, REQUEST_CODE);
                 //startActivity(i);
             }
@@ -88,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
         calendarBadge.show();
 
 
-        View alertTarget = findViewById(R.id.alertTarget);
+        ImageButton alertTarget = (ImageButton) findViewById(R.id.alertTarget);
         final BadgeView alertBadge = new BadgeView(this, alertTarget);
         alertBadge.setText("8");
         //alertBadge.setText("New");
@@ -96,6 +95,16 @@ public class HomeActivity extends AppCompatActivity {
         alertBadge.setBadgeBackgroundColor(Color.YELLOW);
         alertBadge.setTextSize(12);
         alertBadge.show();
+
+        //ImageButton alertButton = (ImageButton) findViewById(R.id.alertTarget);
+        alertTarget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DashboardActivity.this, ListActivity.class);
+                startActivityForResult(i, REQUEST_CODE);
+                //startActivity(i);
+            }
+        });
 
 /*
         Typeface face = new FontCache().get("fonts/" + "Bernardo Moda Bold.ttf", getApplicationContext());
@@ -179,7 +188,7 @@ public class HomeActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
-                       //HomeActivity.super.onBackPressed();
+                       //DashboardActivity.super.onBackPressed();
                         finish();
                     }
                 }).create().show();
@@ -196,11 +205,15 @@ public class HomeActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
-                        //HomeActivity.super.onBackPressed();
+                        //DashboardActivity.super.onBackPressed();
                         //finish();
                     }
                 }).create().show();
         */
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        return false;
+    }
 }

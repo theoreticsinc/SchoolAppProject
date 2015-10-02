@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="#FFFFFFFF"
-        android:id="@+id/imageButton2"
+        android:id="@+id/menuButton"
         android:src="@drawable/menuline"
         android:maxHeight="36dp" />
 

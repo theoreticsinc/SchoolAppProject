@@ -6,4 +6,23 @@
     <string name="parse_app_id">hEBpPIEYk47kC8NdUoxKlFK7wv1Riw8ft9AAfT3V</string>
     <string name="parse_client_key">bjFzXLfxNLiyc6tPWu2u9S5ldOuvShMYQFDHftf2</string>
 
+    <string-array name="settings_array">
+        <item>News Feed</item>
+        <item>Points</item>
+        <item>Profile</item>
+        <item>Inbox</item>
+        <item>Favorites</item>
+        <item>My Post</item>
+        <item>Members</item>
+        <item>Settings</item>
+        <item>Logout</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    <string name="player_name">Player 1</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

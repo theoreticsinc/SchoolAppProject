@@ -1,4 +1,4 @@
-package utils;
+package com.theoreticsinc.schoolapp.utils;
 
 import java.io.InputStream;
 import java.io.OutputStream;

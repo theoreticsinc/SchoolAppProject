@@ -1,4 +1,4 @@
-package utils;
+package com.theoreticsinc.schoolapp.utils;
 
 /**
  * Created by Angelo on 9/27/2015.
@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.theoreticsinc.schoolapp.ListActivity;
+import com.theoreticsinc.schoolapp.activities.ListActivity;
 import com.theoreticsinc.schoolapp.R;
 
 //Adapter class extends with BaseAdapter and implements with OnClickListener

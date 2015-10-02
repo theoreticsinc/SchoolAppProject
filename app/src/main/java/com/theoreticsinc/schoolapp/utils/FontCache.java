@@ -1,4 +1,4 @@
-package utils;
+package com.theoreticsinc.schoolapp.utils;
 
 /**
  * Created by Angelo on 9/30/2015.

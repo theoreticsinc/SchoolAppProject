@@ -1,4 +1,4 @@
-package com.theoreticsinc.schoolapp;
+package com.theoreticsinc.schoolapp.activities;
 
 /**
  * Created by Angelo on 9/27/2015.
@@ -18,7 +18,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.LazyAdapter;
+import com.theoreticsinc.schoolapp.R;
+import com.theoreticsinc.schoolapp.utils.LazyAdapter;
 
 public class ListActivity extends Activity {
 

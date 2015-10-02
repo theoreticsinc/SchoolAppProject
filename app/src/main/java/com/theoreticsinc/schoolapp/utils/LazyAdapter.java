@@ -1,4 +1,4 @@
-package utils;
+package com.theoreticsinc.schoolapp.utils;
 
 import android.app.Activity;
 import android.content.Context;
