@@ -17,6 +17,7 @@
 package com.theoreticsinc.schoolapp.activities;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -27,6 +28,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -81,8 +83,9 @@ public class DrawerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_main);
-
+        this.setTitle("School App");
         mTitle = mDrawerTitle = getTitle();
+
         settingsName = getResources().getStringArray(R.array.settings_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -96,20 +99,38 @@ public class DrawerActivity extends Activity {
         View headerView = inflator.inflate(R.layout.imagedrawer,null);
         //View headerView = LayoutInflater.from(this).inflate(R.layout.imagedrawer, mDrawerLayout);
         //((TextView) headerView.findViewById(R.id.textView1)).setText("Angelo");
-       // mDrawerList.addHeaderView(headerView);
-        
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        //mDrawerList.addHeaderView(headerView);
 
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+/*
         // enable ActionBar app icon to behave as action to toggle nav drawer
+        ActionBar mActionBar = getActionBar();
+        mActionBar.setDisplayShowHomeEnabled(true);
+        mActionBar.setDisplayShowTitleEnabled(true);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+
+        //getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
+        //getActionBar().setDisplayUseLogoEnabled(false);
+        //getActionBar().setDisplayShowCustomEnabled(true);
+        //getActionBar().setCustomView(R.layout.custom_actionbar);
+        //getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
+
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+*/
+
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
+        getActionBar().setCustomView(R.layout.custom_actionbar);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-
+        mDrawerLayout.openDrawer(Gravity.LEFT);
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.menuline,  /* nav drawer image to replace 'Up' caret */
+                R.drawable.blank,  /* nav drawer image to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
                 ) {
@@ -133,8 +154,8 @@ public class DrawerActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
+        //MenuInflater inflater = getMenuInflater();
+        //inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -142,8 +163,8 @@ public class DrawerActivity extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        //boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
