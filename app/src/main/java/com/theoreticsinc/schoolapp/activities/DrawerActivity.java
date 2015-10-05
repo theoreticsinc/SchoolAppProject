@@ -37,6 +37,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.theoreticsinc.schoolapp.R;
 import com.theoreticsinc.schoolapp.fragments.DashboardFragment;
@@ -49,11 +50,11 @@ import com.theoreticsinc.schoolapp.fragments.SettingsFragment;
  * <p>When a navigation (left) drawer is present, the host activity should detect presses of
  * the action bar's Up affordance as a signal to open and close the navigation drawer. The
  * ActionBarDrawerToggle facilitates this behavior.
- * Items within the drawer should fall into one of two categories:</p>
+ * NewsletterItems within the drawer should fall into one of two categories:</p>
  * <p/>
  * <ul>
  * <li><strong>View switches</strong>. A view switch follows the same basic policies as
- * list or tab navigation in that a view switch does not create navigation history.
+ * listView or tab navigation in that a view switch does not create navigation history.
  * This pattern should only be used at the root activity of a task, leaving some form
  * of Up navigation active for activities further down the navigation hierarchy.</li>
  * <li><strong>Selective Up</strong>. The drawer allows the user to choose an alternate
@@ -90,9 +91,9 @@ public class DrawerActivity extends Activity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        // set a custom shadow that overlays the main content when the drawer opens
+        // set a custom shadow that overlays the items_list content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
+        // set up the drawer's listView view with items and click listener
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item, settingsName));
         LayoutInflater inflator = this.getLayoutInflater();
@@ -154,8 +155,8 @@ public class DrawerActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -163,8 +164,9 @@ public class DrawerActivity extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        //boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        //menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
+        //menu.findItem(R.id.action_refresh).setVisible(false);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -177,7 +179,7 @@ public class DrawerActivity extends Activity {
         }
         // Handle action buttons
         switch(item.getItemId()) {
-        case R.id.action_websearch:
+        case R.id.action_refresh:
             /*/ create intent to perform web search for this planet
             Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
             intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
@@ -185,10 +187,10 @@ public class DrawerActivity extends Activity {
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
             } else {
-                Toast.makeText(this, R.string.app_not_available, Toast.LENGTH_LONG).show();
+
             }
             */
-
+            Toast.makeText(this, "DrawerActivity", Toast.LENGTH_LONG).show();
 
             return true;
         default:
@@ -255,6 +257,7 @@ public class DrawerActivity extends Activity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+
     }
 
     @Override

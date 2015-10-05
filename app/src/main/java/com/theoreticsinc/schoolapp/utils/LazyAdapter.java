@@ -16,19 +16,21 @@ import java.util.List;
 public class LazyAdapter extends BaseAdapter {
     
     private Activity activity;
-    private List<String> data;
+    private List<String> imgData;
+    private List<String> titleData;
     private static LayoutInflater inflater=null;
     public ImageLoader imageLoader;
     
-    public LazyAdapter(Activity a, List<String> d) {
+    public LazyAdapter(Activity a, List<String> d, List<String> name) {
         activity = a;
-        data=d;
+        imgData = d;
+        titleData = name;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
     }
 
     public int getCount() {
-        return data.size();
+        return imgData.size();
     }
 
     public Object getItem(int position) {
@@ -46,8 +48,8 @@ public class LazyAdapter extends BaseAdapter {
 
         TextView text=(TextView)vi.findViewById(R.id.text);
         ImageView image=(ImageView)vi.findViewById(R.id.image);
-        text.setText("item "+position);
-        imageLoader.DisplayImage(data.get(position), image);
+        text.setText(titleData.get(position));
+        imageLoader.DisplayImage(imgData.get(position), image);
         return vi;
     }
 }

@@ -4,6 +4,7 @@ package com.theoreticsinc.schoolapp.activities;
  * Created by Angelo on 9/30/2015.
  */
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,19 +15,15 @@ import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListPopupWindow;
 import android.widget.Toast;
-
-import android.view.View.OnClickListener;
 
 import com.parse.Parse;
 
 import com.theoreticsinc.schoolapp.R;
 import com.theoreticsinc.schoolapp.utils.BadgeView;
 
+//TargetApi(10)
 public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemClickListener {
 
     private static final int REQUEST_CODE = 0;
@@ -69,7 +66,7 @@ public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemC
         newsletterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DashboardActivity.this, ListActivity.class);
+                Intent i = new Intent(DashboardActivity.this, AlertsListActivity.class);
                 startActivityForResult(i, REQUEST_CODE);
                 //startActivity(i);
             }
@@ -100,7 +97,7 @@ public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemC
         alertTarget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DashboardActivity.this, ListActivity.class);
+                Intent i = new Intent(DashboardActivity.this, AlertsListActivity.class);
                 startActivityForResult(i, REQUEST_CODE);
                 //startActivity(i);
             }

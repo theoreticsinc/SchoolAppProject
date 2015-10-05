@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Angelo on 9/30/2015.
  */
-public class PageModel {
+public class NewsletterPage {
 
     @SerializedName("newsletters")
-    public Newsletter newsletters;
+    public NewsletterModel newsletters;
 }

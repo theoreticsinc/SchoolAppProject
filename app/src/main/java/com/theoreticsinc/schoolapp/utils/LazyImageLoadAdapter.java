@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.theoreticsinc.schoolapp.activities.ListActivity;
+import com.theoreticsinc.schoolapp.activities.AlertsListActivity;
 import com.theoreticsinc.schoolapp.R;
 
 //Adapter class extends with BaseAdapter and implements with OnClickListener
@@ -110,7 +110,7 @@ public class LazyImageLoadAdapter extends BaseAdapter implements OnClickListener
 
         @Override
         public void onClick(View arg0) {
-            ListActivity sct = (ListActivity)activity;
+            AlertsListActivity sct = (AlertsListActivity)activity;
             //sct.onItemClick(mPosition);
         }
     }

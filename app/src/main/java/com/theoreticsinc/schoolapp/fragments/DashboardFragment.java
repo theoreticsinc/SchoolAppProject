@@ -3,7 +3,6 @@ package com.theoreticsinc.schoolapp.fragments;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,8 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.theoreticsinc.schoolapp.R;
-import com.theoreticsinc.schoolapp.activities.DrawerActivity;
-import com.theoreticsinc.schoolapp.activities.ListActivity;
+import com.theoreticsinc.schoolapp.activities.AlertsListActivity;
 import com.theoreticsinc.schoolapp.utils.BadgeView;
 
 /**
@@ -93,7 +91,7 @@ public class DashboardFragment extends Fragment {
         newsletterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ListActivity.class);
+                Intent i = new Intent(getActivity(), AlertsListActivity.class);
                 startActivityForResult(i, REQUEST_CODE);
                 //startActivity(i);
             }

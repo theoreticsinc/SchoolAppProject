@@ -6,8 +6,8 @@ package com.theoreticsinc.schoolapp.models;
 
 import java.util.List;
 
-public class Newsletter {
+public class NewsletterModel {
 
-    public List<Items> items;
+    public List<NewsletterItems> items;
 
 }

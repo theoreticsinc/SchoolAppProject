@@ -5,12 +5,19 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.theoreticsinc.schoolapp.R;
+import com.theoreticsinc.schoolapp.utils.GSONParser;
 import com.theoreticsinc.schoolapp.utils.LazyAdapter;
 
 import java.util.ArrayList;
@@ -19,42 +26,89 @@ import java.util.List;
 @TargetApi(11)
 public class AlertsListFragment extends Fragment {
 
-	ListView list;
+	ListView listView;
 	LazyAdapter adapter;
 
 	private LayoutInflater inflater;
 
 	public AlertsListFragment() {
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
 		int i = getArguments().getInt("SettingsItem");
 		Log.d("LEAGUE CHAT", "SettingsItem:" + i);
 		View rootView = null;
 
-		rootView = inflater.inflate(R.layout.main, container,
+		rootView = inflater.inflate(R.layout.items_list, container,
 				false);
 		getActivity().setTitle("Settings");
 
-		List<String> mStrings = new ArrayList<String>();
-		mStrings.add("https://pbs.twimg.com/profile_images/1306095935/androidcoo_normal.png");
-		mStrings.add("https://pbs.twimg.com/profile_images/2938108229/399ba333772228bfbb40134018fbe777_normal.jpeg");
-		mStrings.add("https://pbs.twimg.com/profile_images/1701796334/TA-New-Logo_normal.jpg");
-		mStrings.add("https://pbs.twimg.com/profile_images/1417650153/android-hug_normal.png");
-		mStrings.add("https://pbs.twimg.com/profile_images/1517737798/aam-twitter-right-final_normal.png");
-		mStrings.add("https://pbs.twimg.com/profile_images/3319660679/70e7025a05b674852b9f3cea0998259c_normal.jpeg");
-		mStrings.add("https://pbs.twimg.com/profile_images/487047133392949248/sVTI9rGI_normal.png");
-		mStrings.add("https://pbs.twimg.com/profile_images/2100693240/58534_150210305010136_148613708503129_315282_6481640_n_normal.jpg");
+		ImageButton menuButton = (ImageButton) rootView.findViewById(R.id.menuButton2);
+		menuButton.setVisibility(View.GONE);
+		ImageView headerLogo = (ImageView) rootView.findViewById(R.id.headerLogo);
+		headerLogo.setVisibility(View.GONE);
 
-		list=(ListView)rootView.findViewById(R.id.list);
-		adapter=new LazyAdapter(getActivity(), mStrings);
-		list.setAdapter(adapter);
+		GSONParser gsonParser = new GSONParser();
 
-		Button b=(Button)rootView.findViewById(R.id.button1);
-		b.setOnClickListener(buttonListener);
+		String configURL = "http://184.95.54.213/schoolapp/configuration.json";
+		String defaultAlertsURL = "http://184.95.54.213/schoolapp/alerts.json";
+		String alertsURL = "";
+		try {
+			//Read URL of Alerts List from a Config JSON in a server
+			String URL = gsonParser.readConfig("alerts");
+
+			if (null == configURL) {
+				//Read Alerts List from Default URL
+				alertsURL = defaultAlertsURL;
+			}
+			else {
+				alertsURL = URL;
+			}
+		}
+		catch (Exception ex) {
+			Log.e("AlertsListFragment",ex.getMessage());
+		}
+
+		//Process the ALERTS GSON
+		try {
+			gsonParser.processDataFromGSON(alertsURL, rootView.getContext());
+
+			List<String> mStrings = new ArrayList<String>();
+			mStrings.add("https://pbs.twimg.com/profile_images/1306095935/androidcoo_normal.png");
+			mStrings.add("https://pbs.twimg.com/profile_images/2938108229/399ba333772228bfbb40134018fbe777_normal.jpeg");
+			mStrings.add("https://pbs.twimg.com/profile_images/1701796334/TA-New-Logo_normal.jpg");
+			mStrings.add("https://pbs.twimg.com/profile_images/1417650153/android-hug_normal.png");
+//        mStrings.add("https://pbs.twimg.com/profile_images/1517737798/aam-twitter-right-final_normal.png");
+//        mStrings.add("https://pbs.twimg.com/profile_images/3319660679/70e7025a05b674852b9f3cea0998259c_normal.jpeg");
+//        mStrings.add("https://pbs.twimg.com/profile_images/487047133392949248/sVTI9rGI_normal.png");
+//        mStrings.add("https://pbs.twimg.com/profile_images/2100693240/58534_150210305010136_148613708503129_315282_6481640_n_normal.jpg");
+
+			listView = (ListView) rootView.findViewById(R.id.list);
+			adapter = new LazyAdapter(getActivity(), gsonParser.pic_url, gsonParser.name);
+			listView.setAdapter(adapter);
+			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+					System.out.println("Item Clicked");
+					TextView c = (TextView) v.findViewById(R.id.text);
+					String playerChanged = c.getText().toString();
+					Toast.makeText(getActivity(), playerChanged, Toast.LENGTH_SHORT).show();
+				}
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return rootView;
 	}
@@ -67,4 +121,13 @@ public class AlertsListFragment extends Fragment {
 			//finish();
 		}
 	};
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// Do something that differs the Activity's menu here
+		inflater.inflate(R.menu.alerts_menu, menu);
+		//menu.findItem(R.id.action_refresh).setVisible(true);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
 }

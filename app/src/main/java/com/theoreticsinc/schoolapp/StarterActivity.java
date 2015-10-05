@@ -23,6 +23,7 @@ public class StarterActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash_screen);
 
         SharedPreferences preferences = getSharedPreferences("SchoolApp", Context.MODE_PRIVATE);
         boolean init = preferences.getBoolean("initialized", false);

@@ -17,7 +17,7 @@ import com.theoreticsinc.schoolapp.R;
 import com.theoreticsinc.schoolapp.dummy.DummyContent;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of NewsletterItems.
  * <p/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
