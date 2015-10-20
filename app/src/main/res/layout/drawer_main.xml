@@ -18,9 +18,11 @@
 <!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/com.theoreticsinc.schoolapp"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <!-- As the items_list content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -44,7 +46,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0dp"
-        android:background="#FFFFFF"/>
+        android:divider="@android:color/white"
+        android:dividerHeight="1dp"
+        android:textColor="@drawable/color_selector"
+        android:background="@android:color/darker_gray"/>
+
+
 </android.support.v4.widget.DrawerLayout>

@@ -42,6 +42,7 @@ import android.widget.Toast;
 import com.theoreticsinc.schoolapp.R;
 import com.theoreticsinc.schoolapp.fragments.DashboardFragment;
 import com.theoreticsinc.schoolapp.fragments.SettingsFragment;
+import com.theoreticsinc.schoolapp.fragments.WebsiteFragment;
 
 /**
  * This example illustrates a common usage of the DrawerLayout widget
@@ -190,7 +191,7 @@ public class DrawerActivity extends Activity {
 
             }
             */
-            Toast.makeText(this, "DrawerActivity", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "DrawerActivity", Toast.LENGTH_LONG).show();
 
             return true;
         default:
@@ -202,8 +203,9 @@ public class DrawerActivity extends Activity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            System.out.println("Position:"+position);
         	if (position > 0) {
-        		position--;
+        		//position--;
         	}
             selectItem(position);
         }
@@ -214,18 +216,20 @@ public class DrawerActivity extends Activity {
     	FragmentManager fragmentManager = getFragmentManager();
 
         if (position == 1) {
-            Fragment settingsFrag = new SettingsFragment();
+/*            Fragment settingsFrag = new SettingsFragment();
             Bundle args = new Bundle();
             args.putInt("SettingsItem", position);
             settingsFrag.setArguments(args);
             fragmentManager.beginTransaction().replace(R.id.content_frame, settingsFrag).commit();
+*/
         }
-        else if (position == 4){
-            Fragment newpost = new SettingsFragment();
+        else if (position == 3){
+            Fragment newpost = new WebsiteFragment();
             Bundle args = new Bundle();
             args.putInt("SettingsItem", position);
             newpost.setArguments(args);
             fragmentManager.beginTransaction().replace(R.id.content_frame, newpost).commit();
+
         }
         else {
             Fragment dashFrag = new DashboardFragment();
@@ -236,7 +240,7 @@ public class DrawerActivity extends Activity {
         }
     	// update selected item and title, then close the drawer
         setTitle(settingsName[position]);
-        position = position + 1;
+        //position = position + 1;
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
     }

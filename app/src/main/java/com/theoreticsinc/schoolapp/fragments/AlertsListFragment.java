@@ -2,6 +2,10 @@ package com.theoreticsinc.schoolapp.fragments;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theoreticsinc.schoolapp.R;
+import com.theoreticsinc.schoolapp.activities.DetailsActivity;
 import com.theoreticsinc.schoolapp.utils.GSONParser;
 import com.theoreticsinc.schoolapp.utils.LazyAdapter;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +63,7 @@ public class AlertsListFragment extends Fragment {
 		menuButton.setVisibility(View.GONE);
 		ImageView headerLogo = (ImageView) rootView.findViewById(R.id.headerLogo);
 		headerLogo.setVisibility(View.GONE);
-
+/*
 		GSONParser gsonParser = new GSONParser();
 
 		String configURL = "http://184.95.54.213/schoolapp/configuration.json";
@@ -109,6 +115,71 @@ public class AlertsListFragment extends Fragment {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+*/
+		GSONParser gsonParser = new GSONParser();
+
+		String configURL = "http://184.95.54.213/schoolapp/configuration.json";
+		String defaultAlertsURL = "http://184.95.54.213/schoolapp/newsletters.json";
+		String alertsURL = "";
+		try {
+			//Read URL of Alerts List from a Config JSON in a server
+			String URL = gsonParser.readConfig("newsletters");
+
+			if (null == configURL) {
+				//Read Alerts List from Default URL
+				alertsURL = defaultAlertsURL;
+			}
+			else {
+				alertsURL = URL;
+			}
+		}
+		catch (Exception ex) {
+			Log.e("AlertsListActivity",ex.getMessage());
+		}
+
+		//Process the ALERTS GSON
+		try {
+			gsonParser.processDataFromGSON(alertsURL, rootView.getContext());
+
+			listView = (ListView)rootView.findViewById(R.id.list);
+			adapter = new LazyAdapter(getActivity(), gsonParser.pic_url, gsonParser.name);
+			listView.setAdapter(adapter);
+			List<String> details = gsonParser.details;
+			final List<String> finalDetails = details;
+			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+						System.out.println("Item Clicked");
+						TextView c = (TextView) v.findViewById(R.id.text);
+						String alertName = c.getText().toString();
+
+					FragmentManager fragmentManager = getFragmentManager();
+					Fragment newpost = new DetailsFragment();
+					Bundle args = new Bundle();
+
+						//Intent i = new Intent(AlertsListFragment.this, DetailsActivity.class);
+
+						ImageView listimage=(ImageView)v.findViewById(R.id.listimage);
+						Bitmap bitmap = ((BitmapDrawable)listimage.getDrawable()).getBitmap();
+
+						ByteArrayOutputStream bs = new ByteArrayOutputStream();
+						bitmap.compress(Bitmap.CompressFormat.PNG, 100, bs);
+						args.putByteArray("byteArray", bs.toByteArray());
+						args.putString("NAME", alertName);
+						args.putString("DETAILS", finalDetails.get(position));
+
+					newpost.setArguments(args);
+					fragmentManager.beginTransaction().replace(R.id.content_frame, newpost).commit();
+
+					//startActivity(i);
+					}
+				});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//Button b=(Button)findViewById(R.id.button1);
+		//b.setOnClickListener(listener);
 
 		return rootView;
 	}

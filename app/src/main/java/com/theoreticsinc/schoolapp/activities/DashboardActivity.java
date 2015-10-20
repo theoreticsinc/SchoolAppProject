@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -20,6 +22,10 @@ import android.widget.Toast;
 
 import com.parse.Parse;
 
+import com.parse.ParseACL;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.theoreticsinc.schoolapp.R;
 import com.theoreticsinc.schoolapp.utils.BadgeView;
 
@@ -59,8 +65,8 @@ public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemC
         View newsletterTarget = findViewById(R.id.newsletterTarget);
         final BadgeView newsletterBadge = new BadgeView(this, newsletterTarget);
         //newsletterBadge.setBackgroundResource(R.drawable.badge_ifaux);
-        newsletterBadge.setText("1");
-        newsletterBadge.show();
+        //newsletterBadge.setText("1");
+        //newsletterBadge.show();
 
         ImageButton newsletterButton = (ImageButton) findViewById(R.id.newsletterTarget);
         newsletterButton.setOnClickListener(new View.OnClickListener() {
@@ -74,22 +80,22 @@ public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemC
 
         ImageButton eventsTarget = (ImageButton) findViewById(R.id.eventsTarget);
         final BadgeView eventsBadge = new BadgeView(this, eventsTarget);
-        eventsBadge.setText("5");
-        eventsBadge.show();
+        //eventsBadge.setText("5");
+        //eventsBadge.show();
 
 
         View calendarTarget = findViewById(R.id.calendarTarget);
         final BadgeView calendarBadge = new BadgeView(this, calendarTarget);
-        calendarBadge.setText("18");
-        calendarBadge.show();
+        //calendarBadge.setText("18");
+        //calendarBadge.show();
 
 
         ImageButton alertTarget = (ImageButton) findViewById(R.id.alertTarget);
         final BadgeView alertBadge = new BadgeView(this, alertTarget);
-        alertBadge.setText("8");
+        alertBadge.setText("4");
         //alertBadge.setText("New");
-        alertBadge.setTextColor(Color.BLUE);
-        alertBadge.setBadgeBackgroundColor(Color.YELLOW);
+        //alertBadge.setTextColor(Color.BLUE);
+        //alertBadge.setBadgeBackgroundColor(Color.YELLOW);
         alertBadge.setTextSize(12);
         alertBadge.show();
 
@@ -141,6 +147,8 @@ public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemC
             //msg.setText(data);
         } catch (JSONException e) {e.printStackTrace();}
 */
+
+        new BackgroundSave().execute(getApplicationContext());
     }
 
     @Override
@@ -170,8 +178,7 @@ public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemC
         System.out.println("RESULT FROM OTHER ACTIVITY:" +requestCode + ":" + resultCode);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             if (data.hasExtra("returnKey1")) {
-                Toast.makeText(this, data.getExtras().getString("returnKey1"),
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, data.getExtras().getString("returnKey1"), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -212,5 +219,32 @@ public class DashboardActivity extends Activity implements PopupMenu.OnMenuItemC
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         return false;
+    }
+
+    public class BackgroundSave extends AsyncTask {
+        public BackgroundSave(){
+        }
+        @Override
+        protected Object doInBackground(Object... arg0) {
+            try{
+                String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                ParseInstallation.getCurrentInstallation().put("Unique_Id", android_id);
+                ParseInstallation.getCurrentInstallation().saveInBackground();
+
+                ParseUser.enableAutomaticUser();
+                ParseACL defaultACL = new ParseACL();
+                // Optionally enable public read access.
+                // defaultACL.setPublicReadAccess(true);
+                ParseACL.setDefaultACL(defaultACL, true);
+
+                ParseObject testObject = new ParseObject("TestObject");
+                testObject.put("foo", "SchoolApp");
+                testObject.saveInBackground();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }

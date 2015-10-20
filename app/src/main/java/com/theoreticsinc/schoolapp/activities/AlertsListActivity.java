@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -18,10 +20,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,58 +51,75 @@ public class AlertsListActivity extends Activity implements PopupMenu.OnMenuItem
         }
 
         if ((getResources().getConfiguration().screenLayout &      Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            Toast.makeText(this, "Large screen", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Large screen", Toast.LENGTH_SHORT).show();
 
         }
         else if ((getResources().getConfiguration().screenLayout &      Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            Toast.makeText(this, "Normal sized screen" , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Normal sized screen" , Toast.LENGTH_SHORT).show();
 
         }
         else if ((getResources().getConfiguration().screenLayout &      Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-            Toast.makeText(this, "Small sized screen" , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Small sized screen" , Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(this, "Screen size is neither large, normal or small" , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Screen size is neither large, normal or small" , Toast.LENGTH_SHORT).show();
         }
 
         GSONParser gsonParser = new GSONParser();
 
         String configURL = "http://184.95.54.213/schoolapp/configuration.json";
-        String defaultAlertsURL = "http://184.95.54.213/schoolapp/alerts.json";
+        String defaultAlertsURL = "http://184.95.54.213/schoolapp/newsletters.json";
         String alertsURL = "";
-            try {
-                //Read URL of Alerts List from a Config JSON in a server
-                String URL = gsonParser.readConfig("alerts");
+        try {
+            //Read URL of Alerts List from a Config JSON in a server
+            String URL = gsonParser.readConfig("newsletters");
 
-                if (null == configURL) {
-                    //Read Alerts List from Default URL
-                    alertsURL = defaultAlertsURL;
-                }
-                else {
-                    alertsURL = URL;
-                }
+            if (null == configURL) {
+                //Read Alerts List from Default URL
+                alertsURL = defaultAlertsURL;
             }
-            catch (Exception ex) {
-                Log.e("AlertsListActivity",ex.getMessage());
+            else {
+                alertsURL = URL;
             }
+        }
+        catch (Exception ex) {
+            Log.e("AlertsListActivity",ex.getMessage());
+        }
 
         //Process the ALERTS GSON
         try {
             gsonParser.processDataFromGSON(alertsURL, getApplicationContext());
 
-        listView = (ListView)findViewById(R.id.list);
-        adapter = new LazyAdapter(this, gsonParser.pic_url, gsonParser.name);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+            listView = (ListView)findViewById(R.id.list);
+            adapter = new LazyAdapter(this, gsonParser.pic_url, gsonParser.name);
+            listView.setAdapter(adapter);
+            List<String> details = gsonParser.details;
+            final List<String> finalDetails = details;
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
                 System.out.println("Item Clicked");
-                TextView c = (TextView) v.findViewById(R.id.text);
-                String playerChanged = c.getText().toString();
 
-                Toast.makeText(AlertsListActivity.this,playerChanged, Toast.LENGTH_SHORT).show();
-            }
-        });
+
+                TextView c = (TextView) v.findViewById(R.id.text);
+                String alertName = c.getText().toString();
+                Toast.makeText(AlertsListActivity.this, alertName, Toast.LENGTH_SHORT).show();
+
+                    Intent i = new Intent(AlertsListActivity.this, DetailsActivity.class);
+
+                    ImageView listimage=(ImageView)v.findViewById(R.id.listimage);
+                    Bitmap bitmap = ((BitmapDrawable)listimage.getDrawable()).getBitmap();
+
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 75, bs);
+                    i.putExtra("byteArray", bs.toByteArray());
+
+                    i.putExtra("NAME", alertName);
+                    i.putExtra("DETAILS", finalDetails.get(position));
+
+                    startActivity(i);
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,8 +169,8 @@ public class AlertsListActivity extends Activity implements PopupMenu.OnMenuItem
     public void finish() {
         // Prepare data intent
         Intent data = new Intent();
-        data.putExtra("returnKey1", "Swinging on a star. ");
-        data.putExtra("returnKey2", "You could be better then you are. ");
+        //data.putExtra("returnKey1", "Swinging on a star. ");
+        //data.putExtra("returnKey2", "You could be better then you are. ");
         // Activity finished ok, return the data
         setResult(RESULT_OK, data);
         super.finish();

@@ -2,7 +2,8 @@
 <resources>
 
     <item name="white" type="color">#FFFFFFFF</item>
-    <item name="blue" type="color">#FF33B5E5</item>
+    <item name="blue" type="color">#FFFF00AA</item>
+    <item name="lightblue" type="color">#FF33B5E5</item>
     <item name="purple" type="color">#FFAA66CC</item>
     <item name="green" type="color">#FF99CC00</item>
     <item name="orange" type="color">#FFFFBB33</item>

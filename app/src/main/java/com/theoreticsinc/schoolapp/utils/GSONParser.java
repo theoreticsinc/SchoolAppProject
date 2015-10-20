@@ -6,6 +6,7 @@ package com.theoreticsinc.schoolapp.utils;
  */
 
 import android.content.Context;
+import android.os.StrictMode;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -33,6 +34,8 @@ public class GSONParser {
     MemoryCache memoryCache=new MemoryCache();
 
     public GSONParser() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         id = new ArrayList<>();
         name = new ArrayList<>();
         pic_url = new ArrayList<>();

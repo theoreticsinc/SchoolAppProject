@@ -13,7 +13,7 @@
         android:layout_height="45dp"
         android:background="#FFFFFFFF"
         android:id="@+id/headerLogo"
-        android:src="@drawable/logo"
+        android:src="@drawable/logoname"
         android:maxHeight="36dp" />
 
     <ImageButton

@@ -84,39 +84,40 @@ public class DashboardFragment extends Fragment {
         ImageButton newsletterTarget = (ImageButton) view.findViewById(R.id.newsletterTarget);
         final BadgeView newsletterBadge = new BadgeView(context, newsletterTarget);
         //newsletterBadge.setBackgroundResource(R.drawable.badge_ifaux);
-        newsletterBadge.setText("1");
-        newsletterBadge.show();
+        //newsletterBadge.setText("1");
+        //newsletterBadge.show();
 
         ImageButton newsletterButton = (ImageButton) view.findViewById(R.id.newsletterTarget);
         newsletterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), AlertsListActivity.class);
-                startActivityForResult(i, REQUEST_CODE);
+                //Intent i = new Intent(getActivity(), AlertsListActivity.class);
+                //startActivityForResult(i, REQUEST_CODE);
                 //startActivity(i);
             }
         });
 
         ImageButton eventsTarget = (ImageButton) view.findViewById(R.id.eventsTarget);
         final BadgeView eventsBadge = new BadgeView(context, eventsTarget);
-        eventsBadge.setText("5");
-        eventsBadge.show();
+        //eventsBadge.setText("5");
+        //eventsBadge.show();
 
         eventsTarget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
+/*                FragmentManager fragmentManager = getFragmentManager();
                 Fragment newpost = new ItemFragment();
                 Bundle args = new Bundle();
                 newpost.setArguments(args);
                 fragmentManager.beginTransaction().replace(R.id.content_frame, newpost).commit();
+*/
             }
         });
 
         ImageButton calendarTarget = (ImageButton) view.findViewById(R.id.calendarTarget);
         final BadgeView calendarBadge = new BadgeView(context, calendarTarget);
-        calendarBadge.setText("18");
-        calendarBadge.show();
+        //calendarBadge.setText("18");
+        //calendarBadge.show();
 
         calendarTarget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,10 +128,10 @@ public class DashboardFragment extends Fragment {
 
         ImageButton alertTarget = (ImageButton) view.findViewById(R.id.alertTarget);
         final BadgeView alertBadge = new BadgeView(context, alertTarget);
-        alertBadge.setText("8");
+        alertBadge.setText("4");
         //alertBadge.setText("New");
-        alertBadge.setTextColor(Color.BLUE);
-        alertBadge.setBadgeBackgroundColor(Color.YELLOW);
+        //alertBadge.setTextColor(Color.BLUE);
+        //alertBadge.setBadgeBackgroundColor(Color.YELLOW);
         alertBadge.setTextSize(12);
         alertBadge.show();
 

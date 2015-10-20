@@ -2,40 +2,26 @@ package com.theoreticsinc.schoolapp.activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.theoreticsinc.schoolapp.R;
 
-public class DetailsActivity extends AppCompatActivity {
+public class WebsiteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String name= extras.getString("NAME");
-            String details= extras.getString("DETAILS");
-            if (name!= null) {
-                TextView title = (TextView) findViewById(R.id.titleText);
-                title.setText(name);
-            }
-            if (details!= null) {
-                TextView detailstv = (TextView) findViewById(R.id.detailsText);
-                detailstv.setText(details);
-            }
-            if(getIntent().hasExtra("byteArray")) {
-                ImageView previewThumbnail = (ImageView) findViewById(R.id.detailsImage);
-                Bitmap b = BitmapFactory.decodeByteArray(
-                        getIntent().getByteArrayExtra("byteArray"), 0, getIntent().getByteArrayExtra("byteArray").length);
-                previewThumbnail.setImageBitmap(b);
-            }
-        }
+        setContentView(R.layout.websitelink);
+        WebView webView = (WebView) findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("http://andreans.edu.ph/");
+
     }
 
     @Override
