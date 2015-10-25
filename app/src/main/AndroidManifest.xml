@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.theoreticsinc.schoolapp"
+    package="com.theoreticsinc.myschoolbuddyapp"
     android:installLocation="preferExternal" >
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,15 +14,15 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
-        android:name="com.theoreticsinc.schoolapp.permission.C2D_MESSAGE"
+        android:name="com.theoreticsinc.myschoolbuddyapp.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.theoreticsinc.schoolapp.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.theoreticsinc.myschoolbuddyapp.permission.C2D_MESSAGE" />
 
     <application
         android:name=".StarterApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/st_andrew"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name" >
         <meta-data
             android:name="com.parse.APPLICATION_ID"
@@ -87,7 +87,7 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <!-- IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
-                <category android:name="com.theoreticsinc.schoolapp" />
+                <category android:name="com.theoreticsinc.myschoolbuddyapp" />
             </intent-filter>
         </receiver>
 

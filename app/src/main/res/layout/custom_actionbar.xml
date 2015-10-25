@@ -12,6 +12,6 @@
         android:clickable="false"
         android:focusable="false"
         android:longClickable="false"
-        android:src="@drawable/logoname" />
+        android:src="@drawable/navi_schoolbuddy" />
 
 </LinearLayout>

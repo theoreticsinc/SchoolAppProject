@@ -12,6 +12,12 @@
         <item name="android:buttonStyle">@style/MyCustomButton</item>
     </style>
 
+    <style name="SplashTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
     <style name="MyCustomButton" parent="android:Widget.Button">
         <item name="android:background">@drawable/bluebutton</item>
     </style>
